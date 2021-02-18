@@ -5,7 +5,7 @@ class CreateMeals < ActiveRecord::Migration[6.1]
       t.string :description
       t.string :ingredients
       t.float :price
-      t.integer :category_id
+      t.string :category_id
       t.timestamps
     end
   end
