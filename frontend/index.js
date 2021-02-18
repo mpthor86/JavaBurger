@@ -1,7 +1,10 @@
-fetch('http://[::1]:3000/categories')
-    .then(resp => resp.json)
-    .then(data => addToDom(data))
+const catList = document.getElementById('categories')
+const mealList = document.getElementById('meals')
+const mealDetail = document.getElementById('meal-list')
+const main = document.getElementById('menu')
+const mealForm = document.getElementById('meal-form')
+const orderList = document.getElementById('orders')
 
-function addToDom(data){
-    
-}
+
+Category.fetchCategories()
+Meal.fetchMeals()
