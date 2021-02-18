@@ -1,5 +1,5 @@
 class CategorySerializer
   include FastJsonapi::ObjectSerializer
   has_many :meals
-  attributes :name
+  attributes :name, :id
 end
