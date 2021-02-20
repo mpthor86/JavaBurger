@@ -5,20 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Category.create([{name: 'Breakfast'}, {name: 'Lunch'}, {name: 'Dinner'}])
+Burger.create([{name: 'Plain Burger'}, {name: 'Cheese Burger'}])
 
-Meal.create([{name: 'Sampler Plate',
-                description: 'One of Everything',
-                ingredients: 'Eggs, Bacon, Sausage, Hashbrowns, Biscuit',
-                price: 5.99,
-                category_id: 1},
-             {name: 'Java Buger',
-                description: 'Best burger in the DOM',
-                ingredients: 'Beef Patty, Cheese, Lettuce, Tamato, Pickle',
-                price: 8.99,
-                category_id: 2},
-             {name: 'Chicken Fried Steak',
-                description: 'Hand battered fried goodness',
-                ingredients: 'Steak Patty, Mash Patatoes, Corn Cob',
-                price: 12.99,
-                category_id: 3}])
+Ingredient.create([{name: 'Beef Patty', burger_id: 1},
+             {name: 'Mustard', burger_id: 1},
+             {name: 'Pickle', burger_id: 1},
+            {name: 'Beef Patty', burger_id: 2},
+            {name: 'Cheese Slice', burger_id: 2},
+            {name: 'Lettuce', burger_id: 2},
+            {name: 'Tamatoe', burger_id: 2},
+            {name: 'Ketchup', burger_id: 2},
+            {name: 'Pickle', burger_id: 2}])
