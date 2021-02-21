@@ -1,0 +1,29 @@
+html {
+    background: linear-gradient(200deg, rgb(80, 176, 255), rgb(87, 228, 249));
+    background-size: 600% 600%;
+    background-attachment: fixed;
+    height: 100%;
+    min-height: 100%;
+    animation: TackyGradient 12s ease infinite;
+  }
+  html * {
+     font-family: sans-serif !important;
+  }
+
+  .burgerForm {
+      background-color: aliceblue;
+      padding: 10px;
+      text-align: center;
+  }
+
+  .burgerDeets {
+      background-color: aliceblue;
+      padding: 10px;
+      text-align: justify;
+  }
+
+  .burgerList {
+    background-color: aliceblue;
+    padding: 10px;
+    text-align: justify;
+  }
