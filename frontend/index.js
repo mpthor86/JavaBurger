@@ -4,4 +4,4 @@ const burgerForm = document.getElementById('burger-form')
 
 
 BurgerApi.fetchBurgers()
-Ingredient.fetchIngredients()
+IngredientApi.fetchIngredients()
