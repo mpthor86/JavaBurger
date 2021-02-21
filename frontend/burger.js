@@ -5,7 +5,6 @@ class Burger {
         this.name = name
         this.id = id
         this.tag = document.createElement('p')
-        this.tag.addEventListener('click', this.burgerClick)
         Burger.all.push(this)
     }
 
@@ -18,11 +17,15 @@ class Burger {
     }
 
     burgerClick = (e) => {
-        if(e.target.innerText === "Edit Burger"){
+        if(e.target.innerText === "Edit"){
             e.target.innerText = 'Save'
-            this.createEditForm(e.target)
+            this.createEditForm()
+        }else if(e.target.innerText === "Save"){
+            Ingredient.update(this)
+            this.renderBurgerDetail()
+        }else if(typeof(e.target) === 'object'){
+            this.renderBurgerDetail()
         }
-        this.renderBurgerDetail()
     }
 
     render(){
@@ -33,29 +36,45 @@ class Burger {
         return this.tag
     }
 
+    addBurgersToDom() {
+        burgerList.appendChild(this.render())
+        this.tag.addEventListener('click', this.burgerClick)
+    }
+
     renderBurgerDetail(){
+        burgerDetail.innerHTML = ""
         const ings = Ingredient.all.filter((ing) => {
             return ing.burgerId === parseInt(this.id)
         })
-        burgerDetail.addEventListener('click', this.burgerClick)
+
         burgerDetail.innerHTML = `
         <strong>Whats in the ${this.name}</strong><br>
-        <button id="edit">Edit Burger</button>
+        <button id="burger-button">Edit</button>
         `
         ings.forEach(el => {
-            const ingTag = document.createElement('li')
-            ingTag.id = 'ingredient'
-            ingTag.innerText = el.name
-            burgerDetail.appendChild(ingTag)
+            Ingredient.render(el)
+            burgerDetail.appendChild(el.tag)
+        })
+        document.getElementById('burger-button').addEventListener('click', this.burgerClick)
+    }
+
+
+    createEditForm = () => {
+        burgerForm.innerHTML = ""
+        const ings = Ingredient.all.filter((ing) =>{
+            return ing.burgerId === parseInt(this.id)
+        })
+
+        ings.forEach(el => {
+            const inputTag = document.createElement('input')
+            inputTag.setAttribute('type', 'text')
+            inputTag.setAttribute('value', el.name)
+            burgerForm.appendChild(inputTag)
         })
     }
 
-    addBurgersToDom() {
-        burgerList.appendChild(this.render())
-    }
-
-    createEditForm = (button) => {
-        debugger
+    saveBurger = () => {
+         
     }
     
 }
