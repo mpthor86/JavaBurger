@@ -23,96 +23,42 @@ class Ingredient {
         })
     }
 
-    static addMealToDom(e){
-        Meal.all.filter((meal) => {
-            if(meal.categoryId === e){
-                mealList.appendChild(meal.renderMeal())
+    static update(burger) {
+        const ings = Ingredient.all.filter((ing) =>{
+            return ing.burgerId === parseInt(burger.id)
+        })
+        const newIng = burgerForm.children
+        for(let i = 0; i < ings.length; i++){
+            ings[i].name = newIng[i].value}
+        ings.forEach(el => el.updateIngredient())
+    }
+
+    updateIngredient = () =>{
+        const configObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify(this)
+        }
+
+        fetch(`http://[::1]:3000/ingredients/${this.id}`, configObj)
+        .then(r => r.json())
+        .then(json => {
+            if(json.error){
+                alert(json.error)
+                }else{
+                    burgerForm.innerHTML = ""
+                }
             }
-            })
-        }
-
-    handleClick = (e) => {
-        if(e.target.id === 'order'){
-            Order.createOrder(this)
-        }else if(e.target.id === 'edit'){
-            this.renderMealForm()
-        }else if(e.target.id === 'update'){
-            let options = document.querySelectorAll('option')
-            debugger
-            console.log(this)
-        }
+        )
     }
 
-    renderMeal(){
-        mealList.innerText = ""
-        this.tag.innerHTML = `<div id=${this.name}>
-            <strong>${this.name}</strong>
-            - ${this.description}<br>
-            <p><u>On the plate:</u> ${this.ingredients}
-            <p>$ ${this.price}  <button type="button" id='order'>Order</button></p>`
-            return this.tag
-    }
-
-    addOrderToDom = () => {
-        let orderTag = document.createElement('li')
-        orderTag.addEventListener('click', this.handleClick)
-        orderTag.innerHTML = `${this.name} <button type='button' id='edit'>Change</button>`
-        orderList.appendChild(orderTag)
-    } 
-
-    renderMealForm(){
-        mealForm.innerHTML = ''
-        const mealIng = this.ingredients.split(", ")
-        let mealTag = document.createElement('li')
-        let options = ['regular', 'double', 'none']
-
-        mealTag.addEventListener('click', this.handleClick)
-        mealTag.innerHTML = `
-                             <button type='button' id='update'>Update ${this.name}</button>
-                             `
-        mealForm.appendChild(mealTag)
-
-        mealIng.forEach(el => {
-            let mealOptions = document.createElement('li')
-            let input = document.createElement('select')
-            input.setAttribute('id', el)
-                    options.forEach(el => {
-                        let singleOption = document.createElement('option')
-                        singleOption.setAttribute('id', el)
-                        singleOption.text = el
-                        input.appendChild(singleOption)
-                    })
-                mealOptions.innerHTML = `${el}`
-                mealForm.append(mealOptions)
-                mealForm.appendChild(input)})
-    }
-
-    addDropDown = () => {
-        let drop = document.createElement('select')
-        drop.setAttribute('')
-    }
-
-    renderMenu(){
-        main.innerHTML = `
-        <div id='menu'>
-      <div id='category-list'>
-          Categories
-        <ul id='categories'></ul>
-      </div>
-       <div id='meal-list'>
-          Meals:
-        </div>
-          <ul id='meals'>
-
-          </ul>
-        
-        Your Order:
-        <div id='orders'>
-
-        </div>
-      
-      </div>
-      `
+    static render = (el) => {
+        el.tag.innerHTML = `
+        ${el.name}
+        `
     }
 
 }
