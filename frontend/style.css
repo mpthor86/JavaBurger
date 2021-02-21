@@ -10,20 +10,8 @@ html {
      font-family: sans-serif !important;
   }
 
-  .burgerForm {
-      background-color: aliceblue;
-      padding: 10px;
-      text-align: center;
-  }
-
-  .burgerDeets {
-      background-color: aliceblue;
+  body {
+    background-color: aliceblue;
       padding: 10px;
       text-align: justify;
-  }
-
-  .burgerList {
-    background-color: aliceblue;
-    padding: 10px;
-    text-align: justify;
   }
