@@ -12,19 +12,19 @@ class Burger {
         const burger = data['data']
         burger.forEach(el => {
             const burger = new Burger(el.id, el.attributes.name)
-            burger.addBurgersToDom()
+            burger.addToDom()
         })
     }
 
-    burgerClick = (e) => {
+    handleClick = (e) => {
         if(e.target.innerText === "Edit"){
             e.target.innerText = 'Save'
             this.createEditForm()
         }else if(e.target.innerText === "Save"){
             Ingredient.update(this)
-            this.renderBurgerDetail()
+            this.renderDetail()
         }else if(typeof(e.target) === 'object'){
-            this.renderBurgerDetail()
+            this.renderDetail()
         }
     }
 
@@ -36,13 +36,14 @@ class Burger {
         return this.tag
     }
 
-    addBurgersToDom() {
+    addToDom() {
         burgerList.appendChild(this.render())
-        this.tag.addEventListener('click', this.burgerClick)
+        this.tag.addEventListener('click', this.handleClick)
     }
 
-    renderBurgerDetail(){
-        burgerDetail.innerHTML = ""
+    renderDetail(){
+        burgerForm.innerHTML = ""
+        burgerDetail.innerHTML = `<h4><u>Burger Detail:</u></h4>`
         const ings = Ingredient.all.filter((ing) => {
             return ing.burgerId === parseInt(this.id)
         })
@@ -55,26 +56,24 @@ class Burger {
             Ingredient.render(el)
             burgerDetail.appendChild(el.tag)
         })
-        document.getElementById('burger-button').addEventListener('click', this.burgerClick)
+        document.getElementById('burger-button').addEventListener('click', this.handleClick)
     }
 
 
     createEditForm = () => {
-        burgerForm.innerHTML = ""
+        burgerForm.innerHTML = `<h4><u>Update Burger</u></h4>`
         const ings = Ingredient.all.filter((ing) =>{
             return ing.burgerId === parseInt(this.id)
         })
 
         ings.forEach(el => {
+            const li = document.createElement('li')
             const inputTag = document.createElement('input')
             inputTag.setAttribute('type', 'text')
             inputTag.setAttribute('value', el.name)
-            burgerForm.appendChild(inputTag)
+            li.appendChild(inputTag)
+            burgerForm.appendChild(li)
         })
-    }
-
-    saveBurger = () => {
-         
     }
     
 }

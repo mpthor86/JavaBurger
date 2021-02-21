@@ -10,12 +10,6 @@ class Ingredient {
         Ingredient.all.push(this)
     }
 
-    static fetchIngredients(){
-        fetch('http://[::1]:3000/ingredients')
-        .then(resp => resp.json())
-        .then(Ingredient.makeIngredients)
-    }
-
     static makeIngredients(data) {
         const ingredients = data['data']
         ingredients.forEach(el => {
@@ -27,32 +21,10 @@ class Ingredient {
         const ings = Ingredient.all.filter((ing) =>{
             return ing.burgerId === parseInt(burger.id)
         })
-        const newIng = burgerForm.children
+        const newIng = document.querySelectorAll('input')
         for(let i = 0; i < ings.length; i++){
             ings[i].name = newIng[i].value}
-        ings.forEach(el => el.updateIngredient())
-    }
-
-    updateIngredient = () =>{
-        const configObj = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            },
-            body: JSON.stringify(this)
-        }
-
-        fetch(`http://[::1]:3000/ingredients/${this.id}`, configObj)
-        .then(r => r.json())
-        .then(json => {
-            if(json.error){
-                alert(json.error)
-                }else{
-                    burgerForm.innerHTML = ""
-                }
-            }
-        )
+        ings.forEach(el => IngredientApi.update(el))
     }
 
     static render = (el) => {
