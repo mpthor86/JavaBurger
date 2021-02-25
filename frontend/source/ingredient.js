@@ -15,6 +15,7 @@ class Ingredient {
         ingredients.forEach(el => {
             new Ingredient({id: el.id, ...el.attributes})
         })
+        ingredients.forEach(el => Ingredient.render(el))
     }
 
     static update(burger) {
@@ -23,8 +24,9 @@ class Ingredient {
         })
         const newIng = document.querySelectorAll('input')
         for(let i = 0; i < ings.length; i++){
-            ings[i].name = newIng[i].value}
+            ings[i].name = newIng[i].value
         ings.forEach(el => IngredientApi.update(el))
+            }
     }
 
     static render = (el) => {
