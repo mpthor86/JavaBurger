@@ -21,8 +21,8 @@ class Burger {
             e.target.innerText = 'Save'
             this.createEditForm()
         }else if(e.target.innerText === "Save"){
-            Ingredient.update(this)
-            this.renderDetail()
+            const newIng = document.querySelector(`input[id="${e.target.id}"]`)
+            Ingredient.update(e.target.id, newIng.value)
         }else if(typeof(e.target) === 'object'){
             this.renderDetail()
         }
@@ -43,37 +43,45 @@ class Burger {
 
     renderDetail(){
         burgerForm.innerHTML = ""
-        burgerDetail.innerHTML = `<h4><u>Burger Detail:</u></h4>`
         const ings = Ingredient.all.filter((ing) => {
             return ing.burgerId === parseInt(this.id)
         })
 
         burgerDetail.innerHTML = `
         <strong>Whats in the ${this.name}</strong><br>
-        <button id="burger-button">Edit</button>
         `
         ings.forEach(el => {
-            Ingredient.render(el)
             burgerDetail.appendChild(el.tag)
-        })
-        document.getElementById('burger-button').addEventListener('click', this.handleClick)
-    }
 
+            el.tag.addEventListener('click', () => {
 
-    createEditForm = () => {
-        burgerForm.innerHTML = `<h4><u>Update Burger</u></h4>`
-        const ings = Ingredient.all.filter((ing) =>{
-            return ing.burgerId === parseInt(this.id)
-        })
-
-        ings.forEach(el => {
-            const li = document.createElement('li')
-            const inputTag = document.createElement('input')
-            inputTag.setAttribute('type', 'text')
-            inputTag.setAttribute('value', el.name)
-            li.appendChild(inputTag)
-            burgerForm.appendChild(li)
+                if(!el.tag.querySelector('input')){
+                    const button = document.createElement('button')
+                    button.id = el.id
+                    button.innerText = "Save"
+                    button.addEventListener('click', this.handleClick)
+                    el.tag.innerHTML = `<input id=${el.id} value=${el.name}>` 
+                    el.tag.appendChild(button)
+                }
+            })
         })
     }
+
+
+    //createEditForm = () => {
+    //    burgerForm.innerHTML = `<h4><u>Update Burger</u></h4>`
+    //    const ings = Ingredient.all.filter((ing) =>{
+    //        return ing.burgerId === parseInt(this.id)
+    //    })
+//
+    //    ings.forEach(el => {
+    //        const li = document.createElement('li')
+    //        const inputTag = document.createElement('input')
+    //        inputTag.setAttribute('type', 'text')
+    //        inputTag.setAttribute('value', el.name)
+    //        li.appendChild(inputTag)
+    //        burgerForm.appendChild(li)
+    //    })
+    //}
     
 }
