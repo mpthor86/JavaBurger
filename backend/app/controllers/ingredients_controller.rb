@@ -5,11 +5,12 @@ class IngredientsController < ApplicationController
     end
 
     def update
-        ing = Ingredient.find(params[:id])
-        if ing.update(ing_params)
-            render json: IngredientSerializer.new(ing)
+        new_ing = Ingredient.find(params[:id])
+        if new_ing.update(ing_params)
+            render json: IngredientSerializer.new(new_ing)
         else
-            render json: {error: 'could not save'}
+            ing = Ingredient.find(params[:id])
+            render json: {error: 'could not save', ingredient: ing}
         end
     end
 
