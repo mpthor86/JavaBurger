@@ -20,8 +20,11 @@ class IngredientApi {
         .then(json => {
             if(json.error){
                 alert(json.error)
+                const ing = Ingredient.all.find((i) => parseInt(i.id) === json['ingredient'].id)
+                ing.name = json['ingredient'].name
+                ing.render()
                 }else{
-                    burgerForm.innerHTML = ""
+                    Ingredient.all.find((i) => parseInt(i.id) === json['data'].attributes.id).render()
                 }
             }
         )
